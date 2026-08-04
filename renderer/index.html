@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' http://127.0.0.1:* http://localhost:*; font-src 'self' data:">
+<title>WebTranslator 电脑版</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%234f8cff'/%3E%3Cstop offset='1' stop-color='%237c5cff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='24' height='24' rx='6' fill='url(%23g)'/%3E%3Cpath d='M12 5c-3.9 0-7 2.5-7 5.6 0 1.8 1 3.4 2.6 4.5l-.5 2.4 2.6-1.3c.7.2 1.5.3 2.3.3 3.9 0 7-2.5 7-5.6S15.9 5 12 5z' fill='white'/%3E%3Cpath d='M9.5 10.6h5M9.5 13h3' stroke='%234f8cff' stroke-width='1.3' stroke-linecap='round' fill='none'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+  <!-- ===== 侧边栏 ===== -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-logo">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+          <path d="M8 9h8M8 13h5"/>
+        </svg>
+      </div>
+      <div class="brand-text">
+        <strong>WebTranslator</strong>
+        <span>电脑版</span>
+      </div>
+    </div>
+    <nav class="nav">
+      <button class="nav-item active" data-page="local">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6M9 17h6"/></svg>
+        本地翻译
+      </button>
+      <button class="nav-item" data-page="repo">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        仓库翻译
+      </button>
+      <button class="nav-item" data-page="github">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+        GitHub 推送
+      </button>
+      <button class="nav-item" data-page="site">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg>
+        网站文件夹
+      </button>
+    </nav>
+    <div class="sidebar-foot">
+      <button class="nav-item" id="btn-settings">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        设置
+      </button>
+      <div class="server-status" id="server-status"><span class="dot"></span> 本地服务运行中</div>
+    </div>
+  </aside>
+
+  <!-- ===== 主区域 ===== -->
+  <main class="main">
+    <!-- 顶栏 -->
+    <header class="topbar">
+      <div>
+        <h1 id="page-title">本地文件翻译</h1>
+        <p class="subtitle" id="page-subtitle">翻译 HTML / JS / CSS / 文本文件，自动语法校验与修复</p>
+      </div>
+      <div class="topbar-right">
+        <button class="btn small" id="btn-history" title="翻译历史">🕘</button>
+        <button class="btn small" id="btn-theme" title="切换主题（暗色 / 亮色 / 午夜紫）">🌓</button>
+        <div class="gh-chip" id="gh-chip" title="GitHub 登录状态">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          <span id="gh-chip-text">未登录</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="content">
+      <!-- ========== 本地翻译 ========== -->
+      <section class="page active" id="page-local">
+        <div class="card">
+          <div class="card-head">
+            <h2>选择源文件</h2>
+            <span class="badge" id="local-type-badge" hidden></span>
+          </div>
+          <div class="dropzone" id="local-dropzone">
+            <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M17 8l-5-5-5 5"/><path d="M12 3v12"/></svg>
+            <p><strong>拖拽文件到这里</strong> 或 <span class="link">点击选择</span></p>
+            <p class="hint">支持 .html .js .css .txt .md .json .xml .csv，可一次选择多个文件批量翻译</p>
+            <input type="file" id="local-file-input" multiple hidden>
+          </div>
+          <div class="file-list local-queue" id="local-queue" hidden></div>
+          <div class="actions">
+            <button class="btn primary" id="btn-local-translate" disabled>
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8l6 6"/><path d="M4 14l6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="M22 22l-5-10-5 10"/><path d="M14 18h6"/></svg>
+              开始翻译
+            </button>
+            <button class="btn danger-ghost" id="btn-local-stop" hidden>停止</button>
+          </div>
+        </div>
+        <div class="card" id="local-result-card" hidden>
+          <div class="card-head">
+            <h2>翻译结果</h2>
+            <div style="display:flex;gap:10px;align-items:center">
+              <div class="view-toggle">
+                <button id="btn-view-translated" class="active">译文</button>
+                <button id="btn-view-original">原文</button>
+              </div>
+              <span class="badge success" id="local-result-status"></span>
+            </div>
+          </div>
+          <div class="file-list local-queue" id="local-result-list" hidden></div>
+          <pre class="code-view" id="local-result-view" hidden></pre>
+          <div class="actions">
+            <button class="btn" id="btn-local-save" disabled>保存当前文件</button>
+            <button class="btn" id="btn-local-save-all" disabled>全部保存为 ZIP</button>
+            <button class="btn" id="btn-local-copy-fail" hidden>复制失败清单</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== 仓库翻译 ========== -->
+      <section class="page" id="page-repo">
+        <div class="card">
+          <div class="card-head"><h2>GitHub / 静态网站仓库</h2></div>
+          <div class="row">
+            <input type="text" class="input grow" id="repo-url" placeholder="任意静态网站链接（GitHub Pages / github.com / itch.io / GitLab Pages / Gitee Pages / Netlify / Vercel / 自定义域名）">
+            <button class="btn primary" id="btn-repo-query">解析网站</button>
+          </div>
+          <div class="repo-info" id="repo-info" hidden></div>
+          <div class="toolbar">
+            <label class="check"><input type="checkbox" id="repo-check-all" checked> 全选</label>
+            <button class="btn small" id="btn-ai-select">✨ AI 智能筛选</button>
+            <span class="count" id="repo-count"></span>
+          </div>
+          <div class="file-list" id="repo-files"></div>
+          <div class="actions">
+            <button class="btn primary" id="btn-repo-translate" disabled>翻译选中的文件</button>
+            <button class="btn" id="btn-repo-zip" disabled>保存为 ZIP</button>
+            <button class="btn danger-ghost" id="btn-repo-retry" hidden>重试失败文件</button>
+            <button class="btn" id="btn-repo-copy-fail" hidden>复制失败清单</button>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-head"><h2>JS 语法在线检测</h2></div>
+          <div class="row">
+            <input type="text" class="input grow" id="js-url" placeholder="粘贴 JS 文件链接（github.com/.../blob/... 或任意 URL）">
+            <button class="btn" id="btn-js-check">检测</button>
+          </div>
+          <div id="js-result"></div>
+        </div>
+      </section>
+
+      <!-- ========== GitHub 推送 ========== -->
+      <section class="page" id="page-github">
+        <div class="card">
+          <div class="card-head"><h2>GitHub 账号</h2><span class="badge" id="gh-login-badge">未登录</span></div>
+          <div class="row" id="gh-account-row" hidden>
+            <label class="lbl" style="width:72px">当前账号</label>
+            <select class="select grow" id="gh-account-select" title="切换 GitHub 账号"></select>
+            <button class="btn small" id="btn-gh-account-add" title="添加新账号">＋ 添加</button>
+            <button class="btn small danger-ghost" id="btn-gh-account-remove" title="删除当前账号">🗑</button>
+          </div>
+          <div class="login-form">
+            <div class="row">
+              <input type="text" class="input grow" id="gh-client-id" placeholder="OAuth App Client ID（设备码登录用）">
+              <button class="btn small" id="btn-oauth-guide">怎么注册？</button>
+            </div>
+            <div class="row">
+              <input type="password" class="input grow" id="gh-token" placeholder="或直接粘贴 GitHub Token（新账号也可用它添加）">
+              <button class="btn primary" id="btn-gh-login">登录 GitHub</button>
+            </div>
+            <div class="hint" id="gh-login-hint">登录后可推送翻译结果 / 网站 / 文件到仓库，并一键开启 GitHub Pages；多个账号可随时切换</div>
+          </div>
+        </div>
+        <div class="card" id="gh-push-card" hidden>
+          <div class="card-head"><h2>推送与部署</h2></div>
+          <div class="row">
+            <label class="lbl">目标仓库</label>
+            <select class="select grow" id="gh-repo-select"></select>
+            <button class="btn small" id="btn-gh-refresh">刷新</button>
+            <button class="btn small" id="btn-gh-newrepo">新建仓库…</button>
+          </div>
+          <div class="row">
+            <label class="lbl">目录前缀</label>
+            <input type="text" class="input grow" id="gh-push-path" placeholder="可选，推送到子目录，如 zh/">
+            <label class="check"><input type="checkbox" id="gh-pages"> 推送后开启 GitHub Pages</label>
+          </div>
+          <div class="actions">
+            <button class="btn primary" id="btn-gh-push-translated" disabled>推送翻译结果</button>
+            <button class="btn" id="btn-gh-push-site" disabled>推送网站文件夹</button>
+            <button class="btn" id="btn-gh-upload" disabled>上传所选文件</button>
+          </div>
+          <div class="file-meta" id="gh-upload-list" hidden></div>
+          <input type="file" id="gh-upload-input" multiple hidden>
+        </div>
+
+        <!-- 仓库文件管理 -->
+        <div class="card" id="gh-files-card" hidden>
+          <div class="card-head">
+            <h2>仓库文件管理</h2>
+            <span class="badge" id="gh-files-count"></span>
+          </div>
+          <div class="row">
+            <button class="btn small" id="btn-gh-files-load">📂 加载文件列表</button>
+            <button class="btn small" id="btn-gh-files-new">＋ 新建文件</button>
+            <button class="btn small" id="btn-gh-files-refresh" hidden>🔄 刷新列表</button>
+            <button class="btn small primary" id="btn-gh-pages">🚀 开启 GitHub Pages</button>
+          </div>
+          <div class="file-browser">
+            <div class="file-list browser-list" id="gh-files-list">
+              <div class="hint" style="padding:14px">点击「加载文件列表」浏览仓库文件；<br>点击文件在右侧编辑器中查看/修改</div>
+            </div>
+            <div class="editor-pane">
+              <div class="row">
+                <input type="text" class="input grow" id="gh-editor-path" placeholder="文件路径（如 index.html 或 docs/readme.md）">
+                <button class="btn small" id="btn-gh-editor-save" disabled>💾 保存修改</button>
+                <button class="btn small danger-ghost" id="btn-gh-editor-delete" disabled>🗑 删除</button>
+              </div>
+              <textarea class="editor" id="gh-editor" spellcheck="false"
+                placeholder="点击左侧文件查看内容，可直接编辑文本后点「保存修改」。&#10;&#10;新建文件：点「＋ 新建文件」，填路径后编辑内容保存。"></textarea>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== 网站文件夹 ========== -->
+      <section class="page" id="page-site">
+        <div class="card">
+          <div class="card-head"><h2>本地网站文件夹</h2></div>
+          <div class="row">
+            <button class="btn primary" id="btn-site-pick">选择网站文件夹…</button>
+            <span class="count" id="site-info">未选择</span>
+          </div>
+          <div class="file-list" id="site-files"></div>
+          <div class="hint" id="site-hint"></div>
+          <div class="actions">
+            <button class="btn" id="btn-site-open" disabled>在浏览器打开选中</button>
+            <button class="btn" id="btn-site-push" disabled>推送整个网站到仓库</button>
+          </div>
+        </div>
+        <input type="file" id="site-folder-input" webkitdirectory multiple hidden>
+      </section>
+    </div>
+
+    <!-- 日志面板 -->
+    <div class="log-panel">
+      <div class="log-head">
+        <span>运行日志</span>
+        <div class="log-tools">
+          <button class="icon-btn" id="btn-log-export" title="导出日志">📤</button>
+          <button class="icon-btn" id="btn-log-clear" title="清空">🗑</button>
+          <button class="icon-btn" id="btn-log-toggle" title="折叠">▾</button>
+        </div>
+      </div>
+      <div class="log-body" id="log-body"></div>
+    </div>
+  </main>
+</div>
+
+<!-- 进度覆盖层 -->
+<div class="progress-overlay" id="progress-overlay" hidden>
+  <div class="progress-card">
+    <div class="spinner"></div>
+    <div class="progress-title" id="progress-title">处理中…</div>
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+    <div class="progress-text" id="progress-text"></div>
+  </div>
+</div>
+
+<!-- 模态框 -->
+<div class="modal-mask" id="modal-mask" hidden>
+  <div class="modal" id="modal-box"></div>
+</div>
+
+<div class="toast-wrap" id="toast-wrap"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
