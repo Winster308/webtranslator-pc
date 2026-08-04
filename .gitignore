@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.reasonix/
+test_tmp*
+*.log
+.DS_Store
+.git.history/
+test_capture.png
